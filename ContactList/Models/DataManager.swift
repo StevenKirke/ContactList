@@ -11,10 +11,10 @@ import UIKit
 
 class DataManagers {
     
-    var firstNames = ["Israel","Boris","Francisco",
-                      "Aurelio","Alexander","Milton",
-                      "Arla","Tammera","Georgine",
-                      "Julieta"]
+    var firstNames = ["Alexandra","Filiberto","Arla",
+                      "Boris","Francisco","Georgin",
+                      "Israela","Julieta","Milton",
+                      "Tammera"]
     
     var lastNames = ["Ditty","Grandberry","Spagnuolo",
                      "Hilyard","Bohnert","Salas","Plath",
@@ -31,13 +31,13 @@ class DataManagers {
                   "Plath@verizon.net","Scotti@yahoo.com",
                   "Brandow@outlook.com","Thibodaux@optonline.net"]
     
-//    var usedName = Set<String>()
-//    var usedLastName = Set<String>()
-//    var usedNumber = Set<String>()
-//    var usedEmail = Set<String>()
+    var photos = ["Alexandra","Filiberto","Arla",
+                  "Boris","Francisco","Georgin",
+                  "Israela","Julieta","Milton",
+                  "Tammera"]
     
     enum DataType {
-        case name, lastNane, number, email
+        case name, lastNane, number
     }
     
     func getRandom(by type: DataType) -> String {
@@ -63,13 +63,6 @@ class DataManagers {
                 numbers.remove(at: index)
                 return name
             }
-        case .email:
-            if emails.count > 0 {
-                let index = Int.random(in: 0..<emails.count)
-                let name = emails[index]
-                emails.remove(at: index)
-                return name
-            }
         }
         return ""
     }
@@ -80,17 +73,29 @@ struct Person {
     var firstName: String
     var lastName: String
     var numberPhone: String
-    var email: String
+    var email: String = ""
+    var photo: String = ""
     
     
-    static func createPersons(count: Int) -> [Person] {
+    static func createPersons() -> [Person] {
         var persons = [Person]()
         let dataManager = DataManagers()
-        for _ in 0..<count {
-            let person = Person(firstName: dataManager.getRandom(by: .name),
+        let countLastName = dataManager.lastNames.count
+        for _ in 0..<countLastName {
+            var person = Person(firstName: dataManager.getRandom(by: .name),
                                 lastName: dataManager.getRandom(by: .lastNane),
-                                numberPhone: dataManager.getRandom(by: .number),
-                                email: dataManager.getRandom(by: .email))
+                                numberPhone: dataManager.getRandom(by: .number))
+            
+            for elem in dataManager.emails {
+                let cropEmail = elem.components(separatedBy: "@")[0]
+                if person.lastName == cropEmail {
+                    person.email = elem
+                }
+            }
+            
+            if let index = dataManager.photos.firstIndex(where: { $0 == person.firstName }) {
+                person.photo = dataManager.photos[index]
+            }
             persons.append(person)
         }
         return persons

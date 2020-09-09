@@ -9,22 +9,29 @@
 import UIKit
 
 class DetailContactViewController: UIViewController {
-
+    
+    @IBOutlet var personeImage: UIImageView!
+    
+    @IBOutlet var telephoneLabel: UILabel!
+    
+    @IBOutlet var emailLabel: UILabel!
+    
+    var phone: String!
+    var email: String!
+    var photo: String!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        personeImage.layer.cornerRadius = personeImage.bounds.height / 2
+        
+        telephoneLabel.text = phone
+        emailLabel.text = email
+        personeImage.image = UIImage(named: photo)
+        
+        
     }
-    
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
+
