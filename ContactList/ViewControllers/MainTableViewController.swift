@@ -46,13 +46,15 @@ class MainTableViewController: UITableViewController {
             if let indexPath = tableView.indexPathForSelectedRow {
                 let dvc = segue.destination as! DetailContactViewController
                 
-                dvc.title = "\(persons[indexPath.row].firstName) \(persons[indexPath.row].lastName)"
+                //dvc.title = "\(persons[indexPath.row].firstName) \(persons[indexPath.row].lastName)"
+                dvc.person = persons[indexPath.row]
                 
-                dvc.phone = persons[indexPath.row].numberPhone
+//                dvc.phone = persons[indexPath.row].numberPhone
+//
+//                dvc.email = persons[indexPath.row].email
+//
+//                dvc.photo = persons[indexPath.row].photo
                 
-                dvc.email = persons[indexPath.row].email
-                
-                dvc.photo = persons[indexPath.row].photo
             }
         }
     }

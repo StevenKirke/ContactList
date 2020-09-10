@@ -19,17 +19,22 @@ class SectionPersonTableViewController: UITableViewController {
          persons.count
     }
     
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    override func tableView(_ tableView: UITableView,
+                            titleForHeaderInSection section: Int) -> String? {
          "\(persons[section].firstName) \(persons[section].lastName)"
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView,
+                            numberOfRowsInSection section: Int) -> Int {
         2
     }
 
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+    override func tableView(_ tableView: UITableView,
+                            cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell",
+                                                 for: indexPath)
         
         cell.imageView?.image = indexPath.row == 0 ?
             UIImage(named: "icon_phone_30") : UIImage(named: "icon_mail_30")
@@ -46,13 +51,17 @@ class SectionPersonTableViewController: UITableViewController {
             if let indexPath = tableView.indexPathForSelectedRow {
                 let dvc = segue.destination as! DetailContactViewController
                 
-                dvc.title = "\(persons[indexPath.row].firstName) \(persons[indexPath.row].lastName)"
+                let person = persons[indexPath.section]
+                dvc.person = person
                 
-                dvc.phone = persons[indexPath.row].numberPhone
+                //dvc.title = "\(persons[indexPath.row].firstName) \(persons[indexPath.row].lastName)"
                 
-                dvc.email = persons[indexPath.row].email
-                
-                dvc.photo = persons[indexPath.row].photo
+//                dvc.phone = persons[indexPath.section].numberPhone
+//
+//                dvc.email = persons[indexPath.section].email
+//
+//                dvc.photo = persons[indexPath.section].photo
+                //print(indexPath.section.row)
                 
             }
         }

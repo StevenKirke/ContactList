@@ -10,28 +10,32 @@ import UIKit
 
 class DetailContactViewController: UIViewController {
     
-    @IBOutlet var personeImage: UIImageView!
+    let style = Styles()
+    
+    @IBOutlet weak var backgroundImage: UIImageView!
+    
+    @IBOutlet weak var personeImage: UIImageView!
     
     @IBOutlet var telephoneLabel: UILabel!
     
     @IBOutlet var emailLabel: UILabel!
     
-    var phone: String!
-    var email: String!
-    var photo: String!
+    var person: Person?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        personeImage.layer.cornerRadius = personeImage.bounds.height / 2
+        guard let person = person else { return }
         
-        telephoneLabel.text = phone
-        emailLabel.text = email
-        personeImage.image = UIImage(named: photo)
+        style.blurImage(image: backgroundImage, view: view, style: .light)
         
+        //personeImage.layer.cornerRadius = personeImage.frame.height / 2
+        
+        title = "\(person.firstName) \(person.lastName)"
+        telephoneLabel.text = person.numberPhone
+        emailLabel.text = person.email
+        personeImage.image = UIImage(named: person.photo)
         
     }
-
-
 }
 

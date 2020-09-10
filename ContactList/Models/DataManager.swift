@@ -70,32 +70,47 @@ class DataManagers {
 
 
 struct Person {
-    var firstName: String
-    var lastName: String
-    var numberPhone: String
-    var email: String = ""
-    var photo: String = ""
+    let firstName: String
+    let lastName: String
+    let numberPhone: String
+    let email: String
+    let photo: String
     
     
     static func createPersons() -> [Person] {
         var persons = [Person]()
         let dataManager = DataManagers()
         let countLastName = dataManager.lastNames.count
-        for _ in 0..<countLastName {
-            var person = Person(firstName: dataManager.getRandom(by: .name),
-                                lastName: dataManager.getRandom(by: .lastNane),
-                                numberPhone: dataManager.getRandom(by: .number))
+        
+        let firstNames = dataManager.firstNames.shuffled()
+        let lastNames = dataManager.lastNames.shuffled()
+        let numbers = dataManager.numbers.shuffled()
+        
+        for index in 0..<countLastName {
             
-            for elem in dataManager.emails {
-                let cropEmail = elem.components(separatedBy: "@")[0]
-                if person.lastName == cropEmail {
-                    person.email = elem
-                }
-            }
+            let firstName = firstNames[index]
+            let secondName = lastNames[index]
+            let number = numbers[index]
             
-            if let index = dataManager.photos.firstIndex(where: { $0 == person.firstName }) {
-                person.photo = dataManager.photos[index]
-            }
+//            let email = dataManager.emails.first { (email) -> Bool in
+//                if let cropEmail = email.components(separatedBy: "@").first,
+//                    cropEmail == secondName {
+//                    return true
+//                }
+//                return false
+//            }
+            
+            let email = dataManager.emails.first {
+                $0.components(separatedBy: "@").first == secondName
+            } ?? ""
+            
+//
+//            if let index = dataManager.photos.firstIndex(where: { $0 == person.firstName }) {
+//                person.photo = dataManager.photos[index]firstName
+//            }
+//
+            let person = Person(firstName: firstName, lastName: secondName, numberPhone: number, email: email, photo: firstName)
+            
             persons.append(person)
         }
         return persons
